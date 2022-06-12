@@ -1,7 +1,0 @@
-c1a1a表示第一个大课程里的第一个SingleLesson里的第一个Sublevel。
-c1a1b表示第一个大课程里的第一个SingleLesson里的第二个Sublevel。
-
-c2a1a表示第二个大课程里的第一个SingleLesson里的第一个Sublevel。
-c2a2a表示第二个大课程里的第二个SingleLesson里的第一个Sublevel。
-
-或者....随便起什么都行，别弄混就可以了

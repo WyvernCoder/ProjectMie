@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3947949664124810645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3947949664124810644}
+  - component: {fileID: 3947949664124810643}
+  m_Layer: 0
+  m_Name: PRB_DLCUpdater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3947949664124810644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947949664124810645}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3947949664124810643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947949664124810645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eef51fb6eb4c546bca757df94e2270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ABVersion: 1
+  DLCList:
+  - DLCName: "\u66F4\u65B0\u4F7F\u7528\u8005\u9762\u677F"
+    ABPackageName: update
+    InstallDescribe: "\u9ED8\u8BA4\u503C"
+    UnistallDescribe: "\u9ED8\u8BA4\u503C"
+    NotInstallImage: {fileID: 21300000, guid: e36a5bf7c36ad8c4d9b08bab54e3c2ad, type: 3}
+    UninstallImage: {fileID: 21300000, guid: e36a5bf7c36ad8c4d9b08bab54e3c2ad, type: 3}
+    InstalledImage: {fileID: 21300000, guid: 757151bab49122f4b998b7735fdb4f57, type: 3}
+    InstallingImage: {fileID: 21300000, guid: 02ce62819f4c3f448bc2b82417a67179, type: 3}
+    SetAsUpdateBundle: 1
+  - DLCName: "1-1 \u521D\u8BC6\u5C9B\u5C7F"
+    ABPackageName: c1
+    InstallDescribe: "\u8FD9\u91CC\u6709\u4E9B\u597D\u5EB7\u7684\u3002"
+    UnistallDescribe: "\u518D\u89C1\u3002"
+    NotInstallImage: {fileID: 21300000, guid: e36a5bf7c36ad8c4d9b08bab54e3c2ad, type: 3}
+    UninstallImage: {fileID: 21300000, guid: e36a5bf7c36ad8c4d9b08bab54e3c2ad, type: 3}
+    InstalledImage: {fileID: 21300000, guid: 757151bab49122f4b998b7735fdb4f57, type: 3}
+    InstallingImage: {fileID: 21300000, guid: 02ce62819f4c3f448bc2b82417a67179, type: 3}
+    SetAsUpdateBundle: 0

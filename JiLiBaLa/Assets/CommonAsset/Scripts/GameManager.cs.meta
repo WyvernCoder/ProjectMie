@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b25cac5f84e42cd409bb434fc166c09d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BlackIn: {fileID: 8675671110588630918, guid: 042dab7a13b74514581259be96a22c66,
+      type: 3}
+  - BlackInStayInBlack: {fileID: 8675671110588630918, guid: 1e66b4b076ca0494fa15d0daa75450ea,
+      type: 3}
+  - BlackOut: {fileID: 8675671110588630918, guid: 7c145589e1163f14989ee38575901586,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

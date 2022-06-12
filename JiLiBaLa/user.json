@@ -1,0 +1,29 @@
+{
+    "_id": { "$oid": "61ea21dc0e3e35854d4e800b" },
+    "sName": "CY",
+    "sQQNum": "123456789",
+    "sPhoneNum": "123456789",
+    "sPassword": "123456789",
+    "ClassData": [{
+        "bIsComplete": false,
+        "iLegacy1": -1,
+        "iLegacy2": -1,
+        "iLegacy3": -1,
+        "iLegacy4": -1,
+        "iLegacy5": -1
+    }, {
+        "bIsComplete": false,
+        "iLegacy1": -1,
+        "iLegacy2": -1,
+        "iLegacy3": -1,
+        "iLegacy4": -1,
+        "iLegacy5": -1
+    }, {
+        "bIsComplete": false,
+        "iLegacy1": -1,
+        "iLegacy2": -1,
+        "iLegacy3": -1,
+        "iLegacy4": -1,
+        "iLegacy5": -1
+    }]
+}

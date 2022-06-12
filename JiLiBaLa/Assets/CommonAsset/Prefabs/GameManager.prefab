@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9031831500628311915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9031831500628311893}
+  - component: {fileID: 9031831500628311892}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9031831500628311893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031831500628311915}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9031831500628311892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031831500628311915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25cac5f84e42cd409bb434fc166c09d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlackIn: {fileID: 8675671110588630918, guid: 042dab7a13b74514581259be96a22c66, type: 3}
+  BlackInStayInBlack: {fileID: 8675671110588630918, guid: 1e66b4b076ca0494fa15d0daa75450ea,
+    type: 3}
+  BlackOut: {fileID: 8675671110588630918, guid: 7c145589e1163f14989ee38575901586,
+    type: 3}
+  MissionFaliedPrefab: {fileID: 7468438974622704702, guid: ee9c4d56157643744afffd4c0b4dbab4,
+    type: 3}
+  MissionWinPrefab: {fileID: 8011871070032210468, guid: 8a67e14693530ae45b1a653cedd1865e,
+    type: 3}
+  LoadingPrefab: {fileID: 4364957007088981418, guid: aa9ca3e5b4acdc343b5eeca840106931,
+    type: 3}
+  CelebratePrefab: {fileID: 4045591692389252635, guid: 95c6a646864bc074b8190671663560a4,
+    type: 3}
+  AdvPrintPrefab: {fileID: 4520871610403735567, guid: ebdc74c49449fec408726b7aaa3befc6,
+    type: 3}
+  sNum: 
+  sPassword: 
+  Nloadingscenename: 
+  ButtonClickSoundPrefabList:
+  - {fileID: 8345628312608339202, guid: 256ae864514f29049a1795a331a2dd49, type: 3}
+  - {fileID: 8345628312608339202, guid: 08f209ebe42ae7747840ca87217222dd, type: 3}
+  iCurrentTrainBodyIndex: 0
+  iCurrentTrainWindowIndex: 0
+  iTotalTrainBodies: 0
+  isLoading: 0

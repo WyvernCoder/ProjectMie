@@ -1,0 +1,143 @@
+{
+    "m_SelectedDeviceId": "v84px4qwcqx4k7yl",
+    "m_SelectedPackage": {
+        "deviceId": "v84px4qwcqx4k7yl",
+        "name": "com.Neuedu.YeYeLearn",
+        "processId": 23306,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.tencent.mm",
+            "processId": 20331,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.miui.home",
+            "processId": 27681,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 21606,
+            "exited": true
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 22341,
+            "exited": true
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 23153,
+            "exited": true
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.tencent.mobileqq",
+            "processId": 2450,
+            "exited": true
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.android.settings",
+            "processId": 14633,
+            "exited": true
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 31239,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 25718,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 27605,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 28601,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 19916,
+            "exited": false
+        },
+        {
+            "deviceId": "v84px4qwcqx4k7yl",
+            "name": "com.Neuedu.YeYeLearn",
+            "processId": 23306,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}
