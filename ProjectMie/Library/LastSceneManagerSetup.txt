@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Scenes/SE_Menu_P/SE_Menu_P.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0

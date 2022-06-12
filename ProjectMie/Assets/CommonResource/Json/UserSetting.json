@@ -1,0 +1,24 @@
+{
+    "_id" :{"$oid":"d7cc28aefcd0dabebaed4fcd"},
+    "Name":"",
+    "QQ":"",
+    "Phone":"",
+    "Password":"",
+    "SignDay" : [1970,1,1],
+    "LoginDay" : [2022,3,7],
+    "ClassData":
+    [
+        {   
+            "LessonList":
+            [
+                {
+                "isTotalUnlock":false,
+                "isSublevelUnlock":[],
+                "SublevelScore":[],
+                "LegacyInt":[],
+                "LegacyString":[]
+                }
+            ]
+        }
+    ]
+}
