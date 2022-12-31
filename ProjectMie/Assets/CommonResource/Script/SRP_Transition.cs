@@ -7,13 +7,17 @@ public class SRP_Transition : MonoBehaviour
     private Animation aAnimationComponent;
     private float lifetimer = 0f;
     private Canvas animCanvas;
+    public Canvas animCanvass;
     public AudioClip Sounddd;//拖拽赋值，开始转场时会放这个声音
+    public string startTransName = "transition";//开始转场时播放的动画名
+    public string endTransName = "transition_end";//开始转场时播放的动画名
 
     void Awake()
     {
         aAnimationComponent = GetComponent<Animation>();
         DontDestroyOnLoad(this);
-        animCanvas = gameObject.GetComponent<Canvas>();
+        if(animCanvass == null) animCanvas = gameObject.GetComponent<Canvas>();
+        else animCanvas = animCanvass;
         animCanvas.enabled = false;//彩虹的初始位置太难看了，等开始播放再显示出来
         StartCoroutine(Timer_IE());//启动计时器
         gameObject.AddComponent<AudioSource>();//添加一个AudioSource用于播放声音
@@ -31,7 +35,7 @@ public class SRP_Transition : MonoBehaviour
     public GameObject StartTrans()
     {
         gameObject.GetComponent<AudioSource>().PlayOneShot(Sounddd);
-        aAnimationComponent.Play("transition");
+        aAnimationComponent.Play(startTransName);
         animCanvas.enabled = true;
         lifetimer = 0f;//EndTrans要的是Start之后的秒数所以要归零
         return gameObject;
@@ -39,14 +43,16 @@ public class SRP_Transition : MonoBehaviour
 
     public GameObject EndTrans()
     {
-        if(lifetimer < 0.5f)//如果Start动画正在播放，就延后几秒再调用这个函数
+        //!如果是彩虹转场，这里2.5统统要改为0.5
+        if(lifetimer < 2.5f)//如果Start动画正在播放，就延后几秒再调用这个函数
         {
-            Invoke("EndTrans",0.5f - lifetimer);
+            Invoke("EndTrans",2.5f - lifetimer);
             return gameObject;
         }
-        aAnimationComponent.Play("transition_end");
+        aAnimationComponent.Play(endTransName);
         animCanvas.enabled = true;
-        Destroy(gameObject,0.55f);
+        //!彩虹转场为0.55f
+        Destroy(gameObject, 1.2f);
         return gameObject;
     }
 }

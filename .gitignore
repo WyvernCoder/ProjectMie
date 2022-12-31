@@ -1,3 +1,9 @@
 ProjectMie/Library/
 ProjectMie/Logs/
 ProjectMie/Temp/
+ProjectMie/obj/
+ProjectMie/UserSettings/EditorUserSettings.asset
+ProjectMie/Assembly-CSharp.csproj
+ProjectMie/Assembly-CSharp-Editor.csproj
+ProjectMie/Assembly-CSharp-Editor-firstpass.csproj
+ProjectMie/Assembly-CSharp-firstpass.csproj

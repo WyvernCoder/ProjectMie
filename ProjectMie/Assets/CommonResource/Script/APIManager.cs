@@ -1,20 +1,27 @@
+using System;
+using System.IO;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class APIManager : MonoBehaviour
 {
     [HideInInspector]
     public static APIManager API;   //静态类型变量，便于访问APIManager
 
+    [Header("Http服务器")][Tooltip("将在此服务器下载图片、视频等二进制数据。")]
+    public string HttpServer = @"127.0.0.1:9999";
+
     [Tooltip("按钮声音列表。")]
     public List<AudioClip> ButtonSoundList = new List<AudioClip>();
 
     [Tooltip("包含转场动画的Prefab。")]
-    public GameObject TransitionPrefab;//这个是用来在Unity中拖拽赋值的
-    private GameObject goTransitionPrefab;//将上面变量实例化后的引用
+    public GameObject TransitionPrefab;
+    private GameObject goTransitionPrefab;
 
     [Tooltip("包含胜利功能的Prefab。")]
     public GameObject WinPrefab;
@@ -29,51 +36,92 @@ public class APIManager : MonoBehaviour
 
     private string sLoadingSceneName = "NONE";  //用于记录即将要载入Scene的名字
     private AudioSource asAudioPlayer;  //用于播放按钮声音的AudioSource
-    private int iClassCollectionIndex = -1;//记录当前玩的是哪个大类，-1为没玩；大类如“学拼音”、“学成语”
-    private int iSingleLessonIndex = -1;//记录当前玩的是大类中的哪个课程，如“拼音a”、“拼音b”
-    private int iSublevelIndex = -1;//记录当前玩的是课程中的哪个小阶段，如“学”、“听”、“写”
     private bool bIsGameLoading = false;//记录当前是否正处于载入状态，由SRP_LoadingScene维护
     
+    [HideInInspector]
+    public List<string> SceneHistory = new List<string>();// 场景的历史记录，便于制作返回功能。
+
     void Awake()
     {
         if(API != null) Destroy(gameObject);    //去重，防止多个APIManager出现
         API = this;     //为static变量赋值
         DontDestroyOnLoad(this);
-        asAudioPlayer = gameObject.AddComponent<AudioSource>(); //初始化asAudioPlayer，这里使用AddComponent添加组件，省的在Unity那边添加了
+        asAudioPlayer = gameObject.AddComponent<AudioSource>(); //添加一个AudioSource，方便播放声音。
+        SceneHistory.Add(SceneManager.GetActiveScene().name);
+        
+        /* 启动SQL服务器 */
+        UserManager.SQL_Open();
     }
 
-    void Start()
+    void OnDestroy()
     {
-        //NetManager.NET.UserData_Download();
-        //API_LessonIndexCollection_Set(0,0,2);
-        //NetManager.NET.UserData_AddElement(1, 3, 0);
-        //API_UnlockNextSublevel();
-        // API_LoadScene_SetName("SE_Test");
-        // API_LoadScene();
+        UserManager.SQL_Close();
     }
 
     /// <summary>
-    /// 载入关卡
+    /// 在任何时刻任何地点创建一个APIManager。
+    /// 你不需要担心重复创建的问题。
+    /// 并且，没人知道它为什么要叫GENERATE_BODY。
+    /// </summary>
+    public static void GENERATE_BODY()
+    {   /* 科普：GENERATE_BODY是UE4将CPP文件录入其反射系统的宏的名称 */
+        if(APIManager.API != null) return;
+
+        /* 铁打不动的路径 */
+        const string APIManagerPath = @"PrefabCore/APIManager";
+        
+        // AssetDatabase只能在Editor使用
+        //Instantiate(AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(APIManagerPath));
+        Instantiate(Resources.Load<UnityEngine.Object>(APIManagerPath));
+
+        /* 如果你不在竖屏主页面，就自动登录一个账号 */
+        if(UserManager.isLogin != true && SceneManager.GetActiveScene().name != "SE_Menu_P")
+        {   
+            /* 众所周知，Microsoft 正想办法推广无密码登录模式 */
+            if (UserManager.FindSameUser(UserInfoField.username, "debug") == 0)
+                UserManager.CreateUser("debug", "", "");
+
+            UserManager.Login("debug", "");
+            if (UserManager.isLogin) Debug.Log("已自动登录 Debug 账号。");
+        }
+    }
+
+    /// <summary>
+    /// 载入关卡。
+    /// 需使用API_LoadScene_SetName()方法设置要载入的关卡名。
     /// </summary>
     public void API_LoadScene() 
     {   
         if(sLoadingSceneName == "NONE")
         {
-            print("未设置载入地图名，已终止。");
+            Debug.LogAssertion("未设置载入地图名。");
             return;
         }
+
+        /* 写入历史记录 */
+        SceneHistory.Add(API_LoadScene_GetName());
 
         //开始协程
         StartCoroutine(API_LoadScene_IE());
     }
-
     IEnumerator API_LoadScene_IE()
     {
+        API_IsGameLoading(true);
         API_Transition_Start();//开始转场
-        yield return new WaitForSeconds(0.5f);//等待转场动画完成
+        yield return new WaitForSeconds(2f);//先开始转场，等几秒后再开始载入地图，防止加载过快造成下一关卡的声音被提前播放
 
         //切换到SE_Loading这个Scene，第二个参数是当Scene加载完成后，关闭其他所有的Scene，相关的还有Additive模式，后面会用到
-        SceneManager.LoadScene("SE_Loading");
+        if (Application.CanStreamedLevelBeLoaded(API_LoadScene_GetName()) == false)
+        {
+            SceneManager.LoadScene("SE_Loading");
+        }
+        else
+        {
+            var load = SceneManager.LoadSceneAsync(API_LoadScene_GetName());
+            while(load.isDone == false) yield return null;
+            API_IsGameLoading(false);
+            API_Transition_Stop();
+        }
 
         yield break;//这个语句的作用是停止协程
     }
@@ -97,36 +145,58 @@ public class APIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 返回主菜单
-    /// 参数为true时返回竖屏主菜单，false时返回横屏主菜单。
+    /// 直接返回主菜单。
+    /// 该方法的横屏主菜单是指选择大类的横屏主菜单。
+    /// 若你是要从游戏关卡返回到选关横屏菜单，请使用API_SceneGoBack()方法
     /// </summary>
-    /// <param name="isMenuP"></param>
+    /// <param name="isMenuP">是否返回竖屏主菜单？</param>
     public void API_BackToMenu(bool isMenuP = false)
     {
-        //根据参数选择要返回的菜单
         if(isMenuP) 
         {
-            if(Screen.orientation == ScreenOrientation.Landscape) API_RotateScreen();//如果当前是横屏，就给竖过来，因为MenuP是竖屏的
+            /* 如果当前是横屏，就给竖过来，因为MenuP是竖屏的 */
+            if(Screen.orientation == ScreenOrientation.Landscape) API_RotateScreen();
             API_LoadScene_SetName("SE_Menu_P");
         }
         else 
         {
-            if(Screen.orientation == ScreenOrientation.Portrait) API_RotateScreen();//如果当前是竖屏，就给竖过来，因为MenuL是横屏的
-            API_LoadScene_SetName("SE_Menu_L");
+            /* 如果当前是竖屏，就给竖过来，因为SE_Selector是横屏的 */
+            if(Screen.orientation == ScreenOrientation.Portrait) API_RotateScreen();
+            API_LoadScene_SetName("SE_Selector");
         }
-        
-        API_LessonIndexCollection_Set(Selector<int>(-1, -2, isMenuP), -1, -1);//初始化索引
-
 
         //走起
         API_LoadScene();
     }
 
     /// <summary>
-    /// 播放按钮声音
-    /// 参数是ButtonSoundList数组的下标。
+    /// 返回关卡，就像浏览器的“后退”那样。
     /// </summary>
-    /// <param name="index"></param>
+    /// <param name="haveAnimation">是否有过场动画</param>
+    public void API_SceneGoBack(bool haveAnimation = false)
+    {
+        if(SceneHistory.Count < 2)
+        {
+            Debug.LogError("无法返回关卡：历史记录太少。");
+            return;
+        }
+        
+        if(haveAnimation)
+        { 
+            API_LoadScene_SetName(SceneHistory[SceneHistory.Count - 2]);
+            API_LoadScene();
+        }
+        else
+        {
+            SceneHistory.Add(SceneHistory[SceneHistory.Count - 2]);
+            SceneManager.LoadScene(SceneHistory[SceneHistory.Count - 2]);
+        }
+    }
+
+    /// <summary>
+    /// 播放按钮声音。
+    /// </summary>
+    /// <param name="index">ButtonSoundList数组的下标</param>
     public void API_PlayButtonSound(int index)
     {
         asAudioPlayer.PlayOneShot(ButtonSoundList[index]);
@@ -168,10 +238,12 @@ public class APIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 胜利
+    /// 使游戏胜利。
     /// </summary>
-    public void API_WinTheGame()
+    /// <param name="NextSceneID">下一关卡的ID，非关卡名。</param>
+    public void API_WinTheGame(string NextSceneID = "")
     {
+        if(NextSceneID != "") UserManager.SetUserSubscribeClassBool(NextSceneID, true);
         if(goTransitionPrefab != null) Destroy(goTransitionPrefab);
         if(goWinPrefab != null) Destroy(goWinPrefab);
         goWinPrefab = Instantiate(WinPrefab);
@@ -206,43 +278,38 @@ public class APIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取本地密码
-    /// 若没有设置过，则返回“NONE”。
+    /// 获取本地存档的密码，这与账户的本地数据是两码事。
     /// </summary>
-    /// <returns></returns>
+    /// <returns>若没有设置过密码，则返回“NONE”。</returns>
     public string API_Local_GetPassword()
     {
-        return PlayerPrefs.GetString("password","NONE");
+        return API_Local_GetCustomString("password");
     }   
 
     /// <summary>
-    /// 设置本地密码
-    /// 返回值是输入的密码
+    /// 设置本地密码，这与账户的本地数据是两码事。
     /// </summary>
     /// <param name="NewPassword"></param>
-    /// <returns></returns>
+    /// <returns>设置的密码。</returns>
     public string API_Local_SetPassword(string NewPassword)
     {
-        PlayerPrefs.SetString("password",NewPassword);
-        return NewPassword;
+        return API_Local_SetCustomString("password", NewPassword);
     }
 
     /// <summary>
-    /// 获取记录在本地的手机号
-    /// 如果没有设置过，就返回 NONE
+    /// 获取本地存档里的手机号，这与账户的本地数据是两码事。
     /// </summary>
-    /// <returns></returns>
+    /// <returns>若没有设置过手机号，则返回“NONE”。</returns>
     public string API_Local_GetPhoneNumber()
     {
-        return PlayerPrefs.GetString("phone","NONE");
+        return API_Local_GetCustomString("phone");
     }
 
     /// <summary>
-    /// 获取记录在本地的自定义数据字符串
-    /// 如果没有设置过，就返回 NONE
+    /// 获取本地存档里的自定义数据字符串。
     /// </summary>
     /// <param name="Key"></param>
-    /// <returns></returns>
+    /// <returns>若没有设置过，则返回“NONE”。</returns>
     public string API_Local_GetCustomString(string Key)
     {
         return PlayerPrefs.GetString(Key, "NONE");
@@ -250,23 +317,22 @@ public class APIManager : MonoBehaviour
     
 
     /// <summary>
-    /// 设置记录在本地的自定义数据字符串
+    /// 设置本地存档里的自定义数据字符串。
     /// </summary>
     /// <param name="Key"></param>
-    /// <returns></returns>
-    public void API_Local_SetCustomString(string Key, string Value)
+    public string API_Local_SetCustomString(string Key, string Value)
     {
         PlayerPrefs.SetString(Key, Value);
+        return Value;
     }
 
     /// <summary>
-    /// 获取记录在本地的QQ号
-    /// 如果没有设置过，就返回 NONE
+    /// 获取本地存档里的QQ号。
     /// </summary>
-    /// <returns></returns>
+    /// <returns>若没有设置过，则返回“NONE”。</returns>
     public string API_Local_GetQQNumber()
     {
-        return PlayerPrefs.GetString("qq","NONE");
+        return API_Local_GetCustomString("qq");
     }
 
     /// <summary>
@@ -276,8 +342,7 @@ public class APIManager : MonoBehaviour
     /// <returns></returns>
     public string API_Local_SetPhoneNumber(string NewPhone)
     {
-        PlayerPrefs.SetString("phone",NewPhone);
-        return NewPhone;
+        return API_Local_SetCustomString("phone", NewPhone);
     }
 
     /// <summary>
@@ -287,7 +352,7 @@ public class APIManager : MonoBehaviour
     /// <returns></returns>
     public string API_Local_GetUserName()
     {
-        return PlayerPrefs.GetString("username","NONE");
+        return API_Local_GetCustomString("username");
     }
 
     /// <summary>
@@ -297,8 +362,7 @@ public class APIManager : MonoBehaviour
     /// <returns></returns>
     public string API_Local_SetUserName(string NewName)
     {
-        PlayerPrefs.SetString("username",NewName);
-        return NewName;
+        return API_Local_SetCustomString("username", NewName);
     }
 
     /// <summary>
@@ -308,8 +372,7 @@ public class APIManager : MonoBehaviour
     /// <returns></returns>
     public string API_Local_SetQQNumber(string NewQQ)
     {
-        PlayerPrefs.SetString("qq",NewQQ);
-        return NewQQ;
+        return API_Local_SetCustomString("qq", NewQQ);
     }
 
     /// <summary>
@@ -332,76 +395,9 @@ public class APIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取当前课程下标集合
-    /// 返回向量三个参数分别表示当前位于哪个“大类”“课程”“课程中的小测试”
-    /// </summary>
-    /// <returns></returns>
-    public Vector3Int API_LessonIndexCollection_Get()
-    {
-        return new Vector3Int(iClassCollectionIndex, iSingleLessonIndex, iSublevelIndex);
-    }
-
-    /// <summary>
-    /// 设置当前课程索引，若参数为-2则表示对应项不变
-    /// 可通过该函数获取当前玩家所在关卡位置，比如通过该函数实现解锁下一关。
-    /// </summary>
-    /// <param name="ClassCollectionIndex"></param>
-    /// <param name="SingleLessonIndex"></param>
-    /// <param name="SubLevelIndex"></param>
-    /// <returns></returns>
-    public Vector3Int API_LessonIndexCollection_Set(int ClassCollectionIndex = -2, int SingleLessonIndex = -2, int SubLevelIndex = -2)
-    {
-        if(ClassCollectionIndex != -2) iClassCollectionIndex = ClassCollectionIndex;
-        if(SingleLessonIndex != -2) iSingleLessonIndex = SingleLessonIndex;
-        if(SubLevelIndex != -2) iSublevelIndex = SubLevelIndex;
-        return API_LessonIndexCollection_Get();
-    }
-
-    /// <summary>
-    /// 解锁下一个Sublevel或SingleLesson。
-    /// 如果当前Sublevel是该SingleLesson的最后一个Sublevel，那么程序就会去解锁下一个SingleLesson的第一个Sublevel。
-    /// </summary>
-    public void API_UnlockNextSublevel()
-    {
-        //!这里有个小问题，就是它是根据数据库数据去判断是否存在下一关卡的，如果数据库数据大于本地数据，就可能出现问题
-        //所以关卡是处于“只可增不可减”的状态
-        if(NetManager.NET == null)
-        {
-            print("未检测到NetManager的存在，终止操作。");
-            return;
-        }
-
-        if(!NetManager.NET.IsLogin())
-        {
-            print("未登录账号，终止操作。");
-            return;
-        }
-        
-        //如果现在的Sublevel是这个SingleLesson中的最后一个Sublevel
-        if(iSublevelIndex == NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList[iSingleLessonIndex].isSublevelUnlock.Count - 1)
-        {
-            //print("本关卡是最后一个Sublevel！");
-            //就把isTotalUnlock设为true，即：该SingleLesson中的所有Sublevel都通关了
-            NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList[iSingleLessonIndex].isTotalUnlock = true;
-
-            //如果当前SingleLesson下标不等于最后一个SingleLesson下标，说明还有下一个SingleLesson，就去解锁下一个SingleLesson中的第一个Sublevel。判断一个SingleLesson是否解锁，是去判断该SingleLesson的第一个Sublevel是否解锁，所以这里只需要解锁下一个SingleLesson中的第一个Sublevel就可以了
-            if(iSingleLessonIndex != NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList.Count - 1)//看看现在的SingleLesson是不是最后一个SingleLesson
-                NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList[iSingleLessonIndex + 1].isSublevelUnlock[0] = true;//解锁下一SingleLesson的第一个Sublevel！
-        }
-        else
-        {
-            //print("本关卡不是最后一个Sublevel！");
-            //如果现在不是最后一个Sublevel，就只解锁下一个Sublevel
-            NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList[iSingleLessonIndex].isSublevelUnlock[iSublevelIndex + 1] = true;
-        }
-
-        //更新课程数据
-        NetManager.NET.UserData_Update();
-    }
-
-    /// <summary>
-    /// 切换横竖屏模式
+    /// 切换横竖屏模式。
     /// 若当前为横屏，调用后会变成竖屏。
+    /// 在Editor模式下不会有效果。
     /// </summary>
     public void API_RotateScreen()
     {
@@ -410,7 +406,7 @@ public class APIManager : MonoBehaviour
         {   
             //Windows平台
             //交换横竖分辨率
-            Screen.SetResolution(Screen.resolutions[0].height, Screen.resolutions[0].width, false);
+            Screen.SetResolution(Screen.height, Screen.width, false);
         }
         else
         {
@@ -421,36 +417,42 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    // /// <summary>
-    // /// 解锁下一个SingleLesson
-    // /// </summary>
-    // public void API_UnlockNextSingleLesson()
-    // {
-    //     if(NetManager.NET == null)
-    //     {
-    //         print("未检测到NetManager的存在，终止操作。");
-    //         return;
-    //     }
-
-    //     if(!NetManager.NET.IsLogin())
-    //     {
-    //         print("未登录账号，终止操作。");
-    //         return;
-    //     }
-        
-    //     if(iSingleLessonIndex == NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList.Count - 1)
-    //     {
-    //         //如果现在已经是最后一个SingleLesson，就啥也不干
-    //     }
-    //     else
-    //     {
-    //         //如果现在不是最后一个SingleLesson，就解锁下一SingleLesson里的第一个Sublevel
-    //         NetManager.NET.GetUserData().ClassData[iClassCollectionIndex].LessonList[iSingleLessonIndex + 1].isSublevelUnlock[0] = true;
-    //     }
-
-    //     //更新课程数据
-    //     NetManager.NET.UserData_Update();
-    // }
+    /// <summary>
+    /// 切换横竖屏模式。
+    /// 在Editor模式下不会有效果。
+    /// </summary>
+    /// <param name="isGoHor">切换到横屏？</param>
+    public void API_RotateScreen(bool isGoHor)
+    {
+        if(isGoHor == true)
+        {
+            if (!Application.isMobilePlatform)
+            {
+                if(Screen.height > Screen.width)
+                {
+                    API_RotateScreen();
+                }
+            }
+            else
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+            }
+        }
+        else
+        {
+            if (!Application.isMobilePlatform)
+            {
+                if(Screen.width > Screen.height)
+                {
+                    API_RotateScreen();
+                }
+            }
+            else
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
+        }
+    }
 
     /// <summary>
     /// 返回游戏是否正在载入
@@ -481,26 +483,230 @@ public class APIManager : MonoBehaviour
     {
         if(GameObject.FindGameObjectsWithTag("TouchMover").Length == 0)
         {
-            print("当前Scene中没有可用的TouchMover！");
+            Debug.LogAssertion("当前Scene中没有可用的TouchMover！");
             return null;
         }
         return GameObject.FindGameObjectsWithTag("TouchMover")[0].GetComponent<SRP_TouchMover>();
     }
 
     /// <summary>
-    /// 返回值选择器
-    /// 作用是根据一个bool决定返回A还是B。
-    /// 从UE4学来的，很方便吧！！
-    /// 比如下载进度条，没下载完的时候要返回真实下载进度，下载完了就返回100%。
+    /// 读取Txt文件内容。若文件不存在，则返回"NULL"。
     /// </summary>
-    /// <param name="A"></param>
-    /// <param name="B"></param>
-    /// <param name="isA"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public T Selector<T>(T A, T B, bool isA)
+    /// <param name="FileFullPath"></param>
+    /// <returns>txt文件内容</returns>
+    [Obsolete("建议使用WTool.ReadFile()代替此函数", false)]
+    public string API_ReadTxt(string FileFullPath)
     {
-        if(isA) return A;
-        else return B;
+        if(File.Exists(FileFullPath) == false)
+        {
+            Debug.LogAssertion("文件不存在");
+            return "NULL";
+        }
+
+        FileStream fs = new FileStream(FileFullPath, FileMode.Open, FileAccess.Read, FileShare.None);
+        StreamReader sr = new StreamReader(fs, System.Text.Encoding.Default);
+        string str = sr.ReadToEnd();
+        sr.Close();
+        return str;
+    }
+
+    /// <summary>
+    /// 删除文件。
+    /// </summary>
+    /// <param name="FileFullPath">文件全路径</param>
+    /// <param name="inSilent">静音模式，文件不存在时就不会打印信息</param>
+    /// <returns>是否删除成功</returns>
+    public bool API_DeleteFile(string FileFullPath, bool inSilent = false)
+    {
+        if(File.Exists(FileFullPath) == false)
+        {
+            if(inSilent == false) print("文件不存在");
+            return false;
+        }
+
+        File.Delete(FileFullPath);
+        return true;
+    }
+
+
+
+    public delegate void DL_DownloadDelegate(bool isOK, string FileFullPath);//委托，作为回调函数的类型
+    public bool DL_isDownloading { get {return isDownloading;} }//返回当前是否正在下载
+    private bool isDownloading = false;
+    
+    /// <summary>
+    /// 下载文件到本地，一次只能下载一个文件。
+    /// 可使用DL_isDownloading查询是否正在下载。
+    /// 可使用回调函数DL_DownloadDelegate(bool,string)委托，该函数参数为下载是否成功和下载文件全路径。
+    /// 只有可以下载的文件才会返回正确的文件全路径，否则返回"-1"。
+    /// </summary>
+    /// <param name="URL"></param>
+    /// <returns>返回所下载的文件的全路径</returns>
+    public string DL_StartDownload(string URL)
+    {
+        return DL_Download(URL, false, null);
+    }
+    public string DL_StartDownload(string URL, bool isReplaceMode)
+    {
+        return DL_Download(URL, isReplaceMode, null);
+    }
+    public string DL_StartDownload(string URL, bool isReplaceMode, DL_DownloadDelegate Callback)
+    {
+        return DL_Download(URL, isReplaceMode, Callback);
+    }
+    public string DL_StartDownload(string URL, DL_DownloadDelegate Callback)
+    {
+        return DL_Download(URL, false, Callback);
+    }
+
+    private string DL_Download(string URL, bool isReplaceMode, DL_DownloadDelegate Callback)
+    {
+        string FileFullPath = Application.persistentDataPath + "/" + "DownloadedContent" + "/" + URL.Split('/')[URL.Split('/').Length - 1];
+
+        if(isDownloading)
+        {
+            Debug.LogWarning("已有文件正在下载，无法下载其他文件。");
+            Callback(false, FileFullPath);
+            return "-1";
+        }
+        if(File.Exists(FileFullPath))
+        {
+            if(isReplaceMode == false)
+            {
+                print("文件已存在。" + "目标文件：" + FileFullPath);
+                if(Callback != null) Callback(true, FileFullPath);//文件存在也归为下载成功
+                return "-1";
+            }
+        }
+        
+        StartCoroutine(Download_IE(URL, isReplaceMode, Callback));
+        return FileFullPath;
+    }
+    IEnumerator Download_IE(string URL,bool isReplaceMode, DL_DownloadDelegate Callback)
+    {
+        string savePath = Application.persistentDataPath + "/" + "DownloadedContent";
+        
+        string FileFullPath = savePath + "/" + URL.Split('/')[URL.Split('/').Length - 1];
+        string FileName = URL.Split('/')[URL.Split('/').Length - 1];
+        isDownloading = true;
+
+        float TimeOut = 30f;
+        float timer = 0f;
+
+        print("文件开始下载。" + FileFullPath);
+        UnityWebRequest unityWebRequest = UnityWebRequest.Get(URL);
+        unityWebRequest.timeout = 0;
+        unityWebRequest.SendWebRequest();
+
+        while(true)
+        {
+            timer += Time.deltaTime;
+            if(unityWebRequest.isDone) break;
+            if(timer >= TimeOut) break;
+            yield return null;
+        }
+
+        if(unityWebRequest.isDone == false)
+        {
+            Debug.LogWarning("下载超时。" + TimeOut);
+            isDownloading = false;
+            if(Callback != null) Callback(false, FileFullPath);
+            yield break;
+        }
+
+        if(unityWebRequest.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogWarning("下载失败。" + URL);
+            isDownloading = false;
+            if(Callback != null) Callback(false, FileFullPath);
+            yield break;
+        }
+
+        if(unityWebRequest.downloadHandler.data.Length <= 1)
+        {
+            Debug.LogWarning("文件不存在。" + "目标地址：" + unityWebRequest.url);
+            isDownloading = false;
+            if(Callback != null) Callback(false, FileFullPath);
+            yield break;
+        }
+
+        byte[] results = unityWebRequest.downloadHandler.data;   //获取文件字节
+
+        if (!Directory.Exists(savePath))//如果目录不存在
+        {
+            Directory.CreateDirectory(savePath);//创建目录
+        }
+
+        if(isReplaceMode == true) 
+        {
+            print("正在替换文件，目标文件：" + FileFullPath);
+            File.Delete(FileFullPath);
+        }
+
+        FileInfo fileInfo = new FileInfo(FileFullPath);    //新建FileInfo请求
+        FileStream fs = fileInfo.Create();  //在指定目录创建文件
+        fs.Write(results, 0, results.Length);   //将字节数组内容复制到当前FileStream，fs.Write(字节数组, 开始位置, 数据长度);
+        fs.Flush(); //清除此流的缓冲区，使得所有缓冲数据都写入到文件中。
+        fs.Close(); //关闭文件流对象
+        fs.Dispose(); //销毁文件对象
+
+        isDownloading = false;
+        if(Callback != null) Callback(true, FileFullPath);
+        yield break;
+    }
+
+    /// <summary>
+    /// 从本地读取AB包。
+    /// 可搭配DL_StartDownload函数下载AB包，使用该函数读取。
+    /// 参数为AB包名，无需输入后缀。
+    /// 第二参数为回调函数，每载入完一个GameObject都会调用一次，回调函数参数为载入好的GameObject。
+    /// </summary>
+    /// <param name="ABName"></param>
+    public void DL_LoadAssetBundleFromDisk(string ABName) => StartCoroutine(LoadAssetBundle_IE(ABName, null));
+    public void DL_LoadAssetBundleFromDisk(string ABName, DL_LoadedAsset CallbackPerFile) => StartCoroutine(LoadAssetBundle_IE(ABName, CallbackPerFile));
+
+    public delegate void DL_LoadedAsset(GameObject GO);
+
+    IEnumerator LoadAssetBundle_IE(string ABName, DL_LoadedAsset Callback)
+    {
+        string savePath = Application.persistentDataPath + "/" + "DownloadedContent";
+        string FileFullPath = savePath + "/" + ABName + ".ab";
+
+        if(File.Exists(FileFullPath) == false)
+        {
+            print("AB包不存在，目标文件：" + FileFullPath);
+            yield break;
+        }
+
+        var ASYNC = AssetBundle.LoadFromFileAsync(FileFullPath);
+        
+        while(true)
+        {
+            if(ASYNC.isDone) break;
+            yield return null;
+        }
+
+        var ASYNC2 = ASYNC.assetBundle.LoadAllAssetsAsync<GameObject>();
+
+        while(true)
+        {
+            if(ASYNC2.isDone) break;
+            yield return null;
+        }
+
+        foreach(GameObject GO in ASYNC2.allAssets)
+        {
+            Instantiate(GO);
+            if(Callback != null) Callback(GO);
+        }
+
+        ASYNC.assetBundle.Unload(false);
+
+        yield break;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) if(API_IsGameLoading() == false) API_SceneGoBack(true);
     }
 }

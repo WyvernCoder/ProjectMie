@@ -5,19 +5,40 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/SE_Menu_P/SE_Menu_P.unity
     guid: 4c5709c2188bcdb43b4c49d438edeb77
   - enabled: 1
-    path: Assets/Scenes/SE_c1a1a/SE_c1a1a.unity
+    path: Assets/Scenes/SE_Child_BugRunner/SE_ququ.unity
     guid: 7bc6b8f498fd4fe46a27a040028bcfc3
   - enabled: 1
-    path: Assets/Scenes/SE_Loading.unity
+    path: Assets/Scenes/SE_Loading_Legacy.unity
     guid: 986005b60c7403b4db99d07516d485bf
   - enabled: 1
-    path: Assets/Scenes/SE_Menu_L/SE_Menu_L.unity
-    guid: 822e98c20c9f1eb4db9a8efeed8f4383
+    path: Assets/Scenes/SE_Loading/SE_Loading.unity
+    guid: 0f27bda3554ac95439ea780dd5ba410d
+  - enabled: 1
+    path: Assets/Scenes/SE_Child_ZhaoFruit/SE_fanpai.unity
+    guid: 9901df17065df9340bbb7e531170b02a
+  - enabled: 1
+    path: Assets/Scenes/SE_Child_Writer/SE_zimu.unity
+    guid: c7abdee947f876242ba1e881c7e2d8c4
+  - enabled: 1
+    path: Assets/Scenes/SE_shPaint/SE_shPaint.unity
+    guid: 25da9783830ec974fa70163d6977f61d
+  - enabled: 1
+    path: Assets/Scenes/SE_Child_ShellSeeker/SE_zhuabeike.unity
+    guid: 74616f40071938b48a88f2eed681aa70
+  - enabled: 1
+    path: Assets/Scenes/SE_test/SE_test.unity
+    guid: 8359dfb09aff3d94da27e4604817ac53
+  - enabled: 1
+    path: Assets/Scenes/SE_Selector/SE_Selector.unity
+    guid: 4c6968819ca104c4abbc66a2d122f033
+  - enabled: 1
+    path: Assets/Scenes/SE_c1a1/SE_c1a1.unity
+    guid: 2a866d06699e43c45b9e2720fe5e0260
+  - enabled: 1
+    path: Assets/Scenes/SE_Menu_c1/SE_Menu_c1.unity
+    guid: 85b5544671f74e642927e753bc476e53
   m_configObjects: {}

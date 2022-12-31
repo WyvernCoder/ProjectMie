@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4501862190070654347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4501862190070654345}
+  - component: {fileID: 4501862190070654344}
+  m_Layer: 0
+  m_Name: PRB_MissionHelper_Master
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4501862190070654345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501862190070654347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4501862190070654344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501862190070654347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eecb9f2659be354994f4a69c8af0302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionClassList:
+  - type: 0
+    context:
+      Paragraph:
+      - "\u6B22\u8FCE\uFF1F....................\u6B22\u8FCE\uFF0C\u4F60\u597D\u554A"
+      - "\u4F60\u77E5\u9053\u5417\uFF0C\u6211\u662F\u795E\u5947\u5BF9\u8BDD\u6846\uFF0C\u63A5\u4E0B\u5566\uFF0C\u4F60\u5FC5\u987B\u53C2\u52A0\u4E00\u4E2A\u6050..\u5F88\u68D2\u7684\u5B9E\u9A8C\uFF01"
+      - "\u4F60\u5FC5\u987B\u53C2\u52A0....\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED"
+      LeftCharacterImage:
+      - {fileID: 21300000, guid: 82dda29512b33344db207b06427db480, type: 3}
+      RightCharacterImage:
+      - {fileID: 21300000, guid: 65c29eabfb893eb438d4bfe1f0ec1bbb, type: 3}
+      BGImage: {fileID: 21300000, guid: 0e1a07f5da80c4044b9643fab340d443, type: 3}
+      Voice:
+      - {fileID: 8300000, guid: cbca46936fa56d245ae6c7eff5238369, type: 3}
+      - {fileID: 8300000, guid: 969a31ba95db9b947a806384e7c728e6, type: 3}
+      - {fileID: 8300000, guid: 96da1628535cf1f47a1c9fc90397cf2d, type: 3}
+      Music: {fileID: 8300000, guid: 9be93996161882542bad35575e748748, type: 3}
+      WordPop: {fileID: 0}
+    draw:
+      BGImage: {fileID: 21300000, guid: 186b938451955304fac4760a93c15409, type: 3}
+      MissionList:
+      - {fileID: 8334309477250625022, guid: 905e02caaee723e4db291b4597d7fbe9, type: 3}
+      - {fileID: 8334309477250625022, guid: 39a6c1edd17156347965ce796d0d5720, type: 3}
+      - {fileID: 8334309477250625022, guid: 6415b203254c60a4fb41e6a21fd50a0e, type: 3}
+      Music: {fileID: 8300000, guid: 005a399a06c0433499627136b6309b9b, type: 3}
+    selectAndClear:
+      BGImage: {fileID: 0}
+      ImageCollection: []
+      ImageSize: {x: 512, y: 512}
+      ImageSpace: 10
+      Music: {fileID: 0}
+      SoundCollection: []
+    listen:
+      BGImage: {fileID: 0}
+      Word: "\u5929"
+      PinYin: "ti\u0101n"
+      Music: {fileID: 0}
+      Voice: {fileID: 0}
+    custom:
+      PrefabToSpawn: {fileID: 0}
+  - type: 1
+    context:
+      Paragraph:
+      - "\u6B22\u8FCE\uFF1F....................\u6B22\u8FCE\uFF0C\u4F60\u597D\u554A"
+      - "\u4F60\u77E5\u9053\u5417\uFF0C\u6211\u662F\u795E\u5947\u5BF9\u8BDD\u6846\uFF0C\u63A5\u4E0B\u5566\uFF0C\u4F60\u5FC5\u987B\u53C2\u52A0\u4E00\u4E2A\u6050..\u5F88\u68D2\u7684\u5B9E\u9A8C\uFF01"
+      - "\u4F60\u5FC5\u987B\u53C2\u52A0....\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED\u53ED"
+      LeftCharacterImage:
+      - {fileID: 21300000, guid: 82dda29512b33344db207b06427db480, type: 3}
+      RightCharacterImage:
+      - {fileID: 21300000, guid: 65c29eabfb893eb438d4bfe1f0ec1bbb, type: 3}
+      BGImage: {fileID: 21300000, guid: 0e1a07f5da80c4044b9643fab340d443, type: 3}
+      Voice:
+      - {fileID: 8300000, guid: cbca46936fa56d245ae6c7eff5238369, type: 3}
+      - {fileID: 8300000, guid: 969a31ba95db9b947a806384e7c728e6, type: 3}
+      - {fileID: 8300000, guid: 96da1628535cf1f47a1c9fc90397cf2d, type: 3}
+      Music: {fileID: 8300000, guid: 9be93996161882542bad35575e748748, type: 3}
+      WordPop: {fileID: 0}
+    draw:
+      BGImage: {fileID: 21300000, guid: 186b938451955304fac4760a93c15409, type: 3}
+      MissionList:
+      - {fileID: 8334309477250625022, guid: 905e02caaee723e4db291b4597d7fbe9, type: 3}
+      - {fileID: 8334309477250625022, guid: 39a6c1edd17156347965ce796d0d5720, type: 3}
+      - {fileID: 8334309477250625022, guid: 6415b203254c60a4fb41e6a21fd50a0e, type: 3}
+      Music: {fileID: 8300000, guid: 005a399a06c0433499627136b6309b9b, type: 3}
+    selectAndClear:
+      BGImage: {fileID: 0}
+      ImageCollection: []
+      ImageSize: {x: 512, y: 512}
+      ImageSpace: 10
+      Music: {fileID: 0}
+      SoundCollection: []
+    listen:
+      BGImage: {fileID: 0}
+      Word: "\u5929"
+      PinYin: "ti\u0101n"
+      Music: {fileID: 0}
+      Voice: {fileID: 0}
+    custom:
+      PrefabToSpawn: {fileID: 0}
+  - type: 0
+    context:
+      Paragraph:
+      - "\u606D\u559C\u4F60\u5DF2\u7ECF\u5B8C\u6210\u5BF9\u8BDD\u4E86\uFF01"
+      - "\uFF08\u9F13\u638C\u58F0\uFF09"
+      - "\uFF08\u9F13\u638C\u58F0\uFF09x2"
+      - "\uFF08\u9F13\u638C\u58F0\uFF09x3"
+      - "\uFF08\u9F13\u638C\u58F0\uFF09x4"
+      - "\uFF08\u9F13\u638C\u58F0\uFF09x5\uFF08\u9F13\u638C\u58F0\uFF09x6"
+      - "\u518D\u89C1\uFF01\uFF01\uFF01"
+      LeftCharacterImage:
+      - {fileID: 21300000, guid: 82dda29512b33344db207b06427db480, type: 3}
+      RightCharacterImage:
+      - {fileID: 21300000, guid: 65c29eabfb893eb438d4bfe1f0ec1bbb, type: 3}
+      BGImage: {fileID: 21300000, guid: 0e1a07f5da80c4044b9643fab340d443, type: 3}
+      Voice:
+      - {fileID: 8300000, guid: cbca46936fa56d245ae6c7eff5238369, type: 3}
+      - {fileID: 8300000, guid: 969a31ba95db9b947a806384e7c728e6, type: 3}
+      - {fileID: 8300000, guid: 96da1628535cf1f47a1c9fc90397cf2d, type: 3}
+      Music: {fileID: 8300000, guid: 9be93996161882542bad35575e748748, type: 3}
+      WordPop: {fileID: 0}
+    draw:
+      BGImage: {fileID: 21300000, guid: 186b938451955304fac4760a93c15409, type: 3}
+      MissionList:
+      - {fileID: 8334309477250625022, guid: 7537d2e35bf0429418550f68a5ca85c4, type: 3}
+      - {fileID: 8334309477250625022, guid: 2335ad8ecb24bb54cab3f1e4ba12595c, type: 3}
+      - {fileID: 8334309477250625022, guid: 905e02caaee723e4db291b4597d7fbe9, type: 3}
+      - {fileID: 8334309477250625022, guid: 39a6c1edd17156347965ce796d0d5720, type: 3}
+      - {fileID: 8334309477250625022, guid: 6415b203254c60a4fb41e6a21fd50a0e, type: 3}
+      Music: {fileID: 8300000, guid: 005a399a06c0433499627136b6309b9b, type: 3}
+    selectAndClear:
+      BGImage: {fileID: 0}
+      ImageCollection: []
+      ImageSize: {x: 512, y: 512}
+      ImageSpace: 10
+      Music: {fileID: 0}
+      SoundCollection: []
+    listen:
+      BGImage: {fileID: 0}
+      Word: "\u5929"
+      PinYin: "ti\u0101n"
+      Music: {fileID: 0}
+      Voice: {fileID: 0}
+    custom:
+      PrefabToSpawn: {fileID: 0}
+  ContextPrefab: {fileID: 5133676076422051963, guid: 265b86117e4b0ea4ea50a02fac229a87, type: 3}
+  DrawPrefab: {fileID: 3012063573074250666, guid: b6cf8bee25aca474891ae88ca775a11a, type: 3}
+  ListenPrefab: {fileID: 6647889024218673092, guid: c10616866a30c454c8d93dbe40b65ede, type: 3}
+  SelectAndClearPrefab: {fileID: 1537154054684518728, guid: 0f590b06f866f2a4792ef2376456290f, type: 3}
+  CustomPrefab: {fileID: 5655677329368535059, guid: 906906e46ede1c24da10644e83c46170, type: 3}
+  NET: {fileID: 92567579, guid: aaff027eabd6da140a1d3f655e1ce4fb, type: 3}
+  API: {fileID: 7770281815987764927, guid: 34415d2067ac0134e802e778a35a844c, type: 3}
+  CurrentMissionIndex: 0
+  CurrentMissionGameObject: {fileID: 0}
+  LastMission: {fileID: 0}
+  NowMission: {fileID: 0}

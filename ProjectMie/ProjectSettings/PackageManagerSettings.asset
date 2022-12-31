@@ -24,28 +24,28 @@ MonoBehaviour:
     m_Scopes: []
     m_IsDefault: 1
     m_Capabilities: 7
-  - m_Id: "scoped:\u7535\u5B50\u6597\u86D0\u86D0"
-    m_Name: "\u7535\u5B50\u6597\u86D0\u86D0"
-    m_Url: http://www.baidu.com
+  - m_Id: scoped:iWyvernStudio
+    m_Name: iWyvernStudio
+    m_Url: http://www.iwyvernstudio.com
     m_Scopes:
     - 1
     m_IsDefault: 0
     m_Capabilities: 0
-  m_UserSelectedRegistryName: "\u7535\u5B50\u6597\u86D0\u86D0"
+  m_UserSelectedRegistryName: iWyvernStudio
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 
     m_Original:
-      m_Id: "scoped:\u7535\u5B50\u6597\u86D0\u86D0"
-      m_Name: "\u7535\u5B50\u6597\u86D0\u86D0"
-      m_Url: http://www.baidu.com
+      m_Id: scoped:iWyvernStudio
+      m_Name: iWyvernStudio
+      m_Url: http://www.iwyvernstudio.com
       m_Scopes:
       - 1
       m_IsDefault: 0
       m_Capabilities: 0
     m_Modified: 0
-    m_Name: "\u7535\u5B50\u6597\u86D0\u86D0"
-    m_Url: http://www.baidu.com
+    m_Name: iWyvernStudio
+    m_Url: http://www.iwyvernstudio.com
     m_Scopes:
     - 1
     m_SelectedScopeIndex: 0

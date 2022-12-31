@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,51 +21,38 @@ public class SRP_Signin : MonoBehaviour
     {
         HintText.text = "";//每次登录都初始化提示
 
-        if(NetManager.NET.IsNetworkWell() == false)
-        {
-            HintText.color = Color.red;
-            HintText.text = "请检查是否已有网络连接";
-            return;
-        }
+        //TODO 检查网络连接
 
-        if(PhoneInput.text == "" || PasswordInput.text == "" || QQInput.text == "" || NameInput.text == "")
+        // if(PhoneInput.text == "" || PasswordInput.text == "" || QQInput.text == "" || NameInput.text == "")
+        if(PhoneInput.text == "" || PasswordInput.text == "" || NameInput.text == "")
         {
             HintText.color = Color.red;
             HintText.text = "凭据输入不全";
             return;
         }
 
-        APIManager.API.API_Local_SetPhoneNumber(PhoneInput.text);//把输入框的手机号填入本地存档
-        NetManager.NET.UserData_Download();//从数据库获取对应手机号的Document...没错，是直接获取整个DOCUMENT，就像直接登录了一样....非常危险吧！
-
-        //看看是否成功下载DOCUMENT
-        if (NetManager.NET.IsLogin() == true)
+        if (UserManager.FindSameUser(UserInfoField.username, PhoneInput.text) != 0)
         {
-            //账号不存在
             HintText.color = Color.red;
             HintText.text = "手机号已存在";
-            NetManager.NET.UserData_Logout();//清空客户端接收的DOCUMENT
             return;
         }
 
-        //设置本地账号数据
-        APIManager.API.API_Local_SetUserName(NameInput.text);
-        APIManager.API.API_Local_SetQQNumber(QQInput.text);
-        APIManager.API.API_Local_SetPhoneNumber(PhoneInput.text);
-        APIManager.API.API_Local_SetPassword(PasswordInput.text);
-        //使用本地账号数据进行创建账号
-        NetManager.NET.UserData_Create();
+        // 创建账号
+        try
+        {
+            UserManager.CreateUser(PhoneInput.text, NameInput.text, PasswordInput.text);
+        }
+        catch(Exception ex)
+        {
+            HintText.text = "注册失败，原因是" + ex.Message;
+            HintText.color = Color.red;
+            return;
+        }
 
-        //验证账号是否创建完成
-        NetManager.NET.UserData_Download();
-        HintText.text = APIManager.API.Selector("注册成功", "注册失败", NetManager.NET.IsLogin());
-
-        //无论是否创建完成，都清空本地记录的数据
-        APIManager.API.API_Local_SetUserName("NONE");
-        APIManager.API.API_Local_SetQQNumber("NONE");
-        APIManager.API.API_Local_SetPhoneNumber("NONE");
-        APIManager.API.API_Local_SetPassword("NONE");
-
+        HintText.text = "注册成功";
+        HintText.color = Color.green;
+        return;
     }
 
     public void CONTROL_Close()

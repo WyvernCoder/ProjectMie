@@ -9,6 +9,6 @@ public class SRP_Option_01_Login : MonoBehaviour
     void FixedUpdate()
     {
         //如果已经登录了，就显示“退出登录”，反之显示“登录账号”
-        TEXT.text = APIManager.API.Selector("退出登录", "登录账号", NetManager.NET.IsLogin()); 
+        TEXT.text = WTool.Selector_("退出登录", "登录账号", UserManager.isLogin); 
     }
 }

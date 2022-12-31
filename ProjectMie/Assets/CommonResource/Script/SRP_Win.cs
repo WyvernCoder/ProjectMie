@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class SRP_Win : MonoBehaviour
 {
-    void Start()
-    {
-        //无论怎样都要解锁下一关
-        APIManager.API.API_UnlockNextSublevel();
-    }
-
     //重新开始
     public void CONTROL_Restart()
     {
@@ -22,6 +16,6 @@ public class SRP_Win : MonoBehaviour
     public void CONTROL_Leave()
     {
         APIManager.API.API_PlayButtonSound(0);
-        APIManager.API.API_BackToMenu();
+        APIManager.API.API_SceneGoBack(true);
     }
 }

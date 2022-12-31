@@ -15,6 +15,6 @@ public class SRP_Failed : MonoBehaviour
     public void CONTROL_Leave()
     {
         APIManager.API.API_PlayButtonSound(0);
-        APIManager.API.API_BackToMenu();
+        APIManager.API.API_SceneGoBack(true);
     }
 }

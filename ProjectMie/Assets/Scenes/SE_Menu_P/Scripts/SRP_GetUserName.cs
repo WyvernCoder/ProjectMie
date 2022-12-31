@@ -8,20 +8,19 @@ public class SRP_GetUserName : MonoBehaviour
 
     void Start()
     {
-        if(NetManager.NET == null || APIManager.API == null)
+        if(APIManager.API == null)
         {
             print("缺少重要组件，无法获取人名！");
             return;
         }
 
-        UpdateName();//这是个循环函数
+        UserManager.Event_OnUserLogin += UpdateName;
     }
 
-    private void UpdateName()
+    private void UpdateName(bool isLogin)
     {
         //如果登录了就显示“你好，XXX！”
         //如果没登录就显示“未登录”
-        TEXT.text = APIManager.API.Selector("你好，" + NetManager.NET.GetUserData().Name + "！", "未登录", NetManager.NET.IsLogin());
-        Invoke("UpdateName", 1f);//每隔1秒就调用这个函数，实现自动更新的功能
+        TEXT.text = WTool.Selector_("你好，" + UserManager.GetUserInfo(UserInfoField.nickname) + "！", "未登录", isLogin);
     }
 }

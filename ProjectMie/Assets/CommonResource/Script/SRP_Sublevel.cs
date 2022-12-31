@@ -27,24 +27,24 @@ public class SRP_Sublevel : MonoBehaviour
         else this.SublevelText.font = Fontt;
     }
 
+    // !Sublesson已死
     //当小课程被点击时（如“听”“说”“读”“写”）
-    public void CONTROL_OnSublevelClick()
-    {
-        if(SublevelLevelName == "NONE" || SublevelIndex == -2)
-        {
-            print("该Sublesson未被正确初始化。");
-            return;
-        }
+    // public void CONTROL_OnSublevelClick()
+    // {
+    //     if(SublevelLevelName == "NONE" || SublevelIndex == -2)
+    //     {
+    //         print("该Sublesson未被正确初始化。");
+    //         return;
+    //     }
 
-        if(APIManager.API == null || NetManager.NET == null)
-        {
-            print("重要组件丢失！");
-            return;
-        }
+    //     if(APIManager.API == null || NetManager.NET == null)
+    //     {
+    //         print("重要组件丢失！");
+    //         return;
+    //     }
         
-        APIManager.API.API_LessonIndexCollection_Set(-2, -2, SublevelIndex);//更新当前Sublevel下标
-        APIManager.API.API_LoadScene_SetName(SublevelLevelName);//设置要载入的关卡名
-        APIManager.API.API_LoadScene();//走起！
-
-    }
+    //     APIManager.API.API_LessonIndexCollection_Set(-2, -2, SublevelIndex);//更新当前Sublevel下标
+    //     APIManager.API.API_LoadScene_SetName(SublevelLevelName);//设置要载入的关卡名
+    //     APIManager.API.API_LoadScene();//走起！
+    // }
 }
